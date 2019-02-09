@@ -8,10 +8,12 @@ package laboratorio4_renatovarela;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author Asus Pc
+ * @author Renato Y Tiffanny
  */
 public class Laboratorio4_Renatovarela {
 
@@ -245,9 +247,18 @@ public class Laboratorio4_Renatovarela {
     }
 
     private static void Asignar_c() {
-            
+        int posicion;
+        int posicion2;
+
+        System.out.println("Ingrese la posicion del criminal al que se le asignara el crimen");
+        posicion = r.nextInt();
+        
+        System.out.println("Ingrese la posicion del crimen que cometio");
+        posicion2 =r.nextInt();
         
         
+        cri.get(posicion).getDelito().add(del.get(posicion));
+
     }
     
     
@@ -646,7 +657,7 @@ public class Laboratorio4_Renatovarela {
     private static void Lista_tas() {
         
         for (int i = 0; i < tas.size(); i++) {
-            System.out.println("\nPosicion del criminal: " +tas.indexOf(tas.get(i)) + "\n--------------------------------------"+ "" +tas.get(i));
+            System.out.println("\nPosicion del criminal: " +tas.indexOf(tas.get(i)) + "\n--------------------------------------"+ "" +tas.get(i)+"\n");
         }
        
     }
@@ -656,61 +667,44 @@ public class Laboratorio4_Renatovarela {
    
     
     
-    
-    
-    
-    
-          
-        /*System.out.println("Esta encarcelado? ingrese: \n1)SI ESTA ENCARCELADO \n2)NO ESTA ENCARCELADO");
-        encarcelado = r.next();
-        while(!encarcelado.equals("1") && !encarcelado.equals("2")){
-            System.out.println("VUELVA A INGRESAR LA OPCION");
-            System.out.println("Esta encarcelado? ingrese: \n1)SI ESTA ENCARCELADO \n2)NO ESTA ENCARCELADO");
-        encarcelado = r.next();
-        }
-        
-        if (encarcelado.equals("1")) {
-            encarcelado = "SI ESTA ENCARCELADO";
-        }else{
-            encarcelado = "NO ESTA ENCARCELADO";
-        }*/ 
+
 
     private static void cometer_delito() {
         
-        //Aqui se llama al metodo polimorfico , hecho con una interfaz
-        //la interfaz se implementa en la clase agente
-        
-        int posicion;
-        System.out.println("--------------------------------------------------");
-        System.out.println("Ingrese la posicion del Agente que desea que cometa el Crimen wuajajaja ");
-        posicion = r.nextInt();
-        
-        tas.get(posicion).cometer_delito();
+        try {
+            //Aqui se llama al metodo polimorfico , hecho con una interfaz
+            //la interfaz se implementa en la clase agente
+            
+            int posicion;
+            System.out.println("--------------------------------------------------");
+            System.out.println("Ingrese la posicion del Agente que desea que cometa el Crimen wuajajaja ");
+            posicion = r.nextInt();
+            
+            
+            validad(tas.get(posicion).getDelito());
+            tas.get(posicion).getDelito().add(new Delito());
+            tas.get(posicion).cometer_delito();
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
        
         
         
     }
     
     
+       static void validad(ArrayList<Delito> x) throws MiExcepcion{
+           if (!x.isEmpty()) {
+               System.out.println("EL DELITO YA FUE REALIZDO: \nRecuerde:");
+           }
+   
+    }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   
+       
+       
+  
     
     public static void delito() {
         int opcion;
@@ -744,6 +738,8 @@ public class Laboratorio4_Renatovarela {
         
     }
     
+    
+
     public static void a_delito() {
         String nom_dueno, edificacion, nombre_arma, nombre_artefacto, nombre_droga, nom_solicitante, objeto, descripcion, nombre_delito, culpable = null, sentencia = null, pais;
         int culp, sent, t, tipo, pisos, cantidad, num_victimas, num_cuerpos, edad_victima;
@@ -755,13 +751,33 @@ public class Laboratorio4_Renatovarela {
         System.out.println("Descripcion: ");
         r.nextLine();
         descripcion = r.nextLine();
+        try {
+            texto(descripcion);
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
         System.out.println("Nombre del delito: ");
         nombre_delito = r.nextLine();
+        try {
+            texto(nombre_delito);
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
         System.out.println("Culpable [1.Si, 2.No]: ");
         culp = r.nextInt();
+        try {
+            num(culp);
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
         while (culp < 1 || culp > 2) {
             System.out.println("Culpable [1.Si, 2.No]: ");
             culp = r.nextInt();
+            try {
+                num(culp);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
         }
         if (culp == 1) {
             culpable = "Si";
@@ -772,9 +788,19 @@ public class Laboratorio4_Renatovarela {
         if (culp == 1) {
             System.out.println("Sentencia [1.Tiempo, 2.Pena de muerte]: ");
             sent = r.nextInt();
+            try {
+                num(sent);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
             while (sent < 1 || sent > 2) {
                 System.out.println("Sentencia [1.Tiempo, 2.Pena de muerte]: ");
                 sent = r.nextInt();
+                try {
+                    num(sent);
+                } catch (MiExcepcion ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
             if (sent == 1) {
                 System.out.println("Ingrese el tiempo: ");
@@ -783,116 +809,255 @@ public class Laboratorio4_Renatovarela {
             if (sent == 2) {
                 sentencia = "Pena de muerte";
             }
-            
+
         }
-        System.out.println("Fecha del crimen: ");
+        //System.out.println("Fecha del crimen: ");
         fecha_crimen = new Date();
         System.out.println("Pais: ");
         pais = r.next();
+        try {
+            texto(pais);
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
         System.out.println("Que tipo de delito es? [1.Menor, 2.Grave]: ");
         t = r.nextInt();
+        try {
+            num(t);
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
         while (t < 1 || t > 2) {
             System.out.println("Que tipo de delito es? [1.Menor, 2.Grave]: ");
             t = r.nextInt();
+            try {
+                num(t);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
         }
         if (t == 1) {
             System.out.println("Nombre de policia: ");
             n_policia = r.next();
+            try {
+                texto(n_policia);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
             System.out.println("ID policia: ");
             id_policia = r.next();
+            try {
+                texto(id_policia);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
             System.out.println("Numero de celda: ");
             n_celda = r.nextInt();
-            //del.add(new D_menor(n_policia, id_policia, n_celda, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
-            System.out.println(" 1.Vandalismo\n 2.Hurto\n 3.Prostitucion");
-            tipo = r.nextInt();
-            while (tipo < 1 || tipo > 3) {
-                System.out.println(" 1.Vandalismo\n 2.Hurto\n 3.Prostitucion");
-                tipo = r.nextInt();
+            try {
+                num(n_celda);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
             }
-            switch (tipo) {
-                case 1:
-                    System.out.println("Edificacion: ");
-                    edificacion = r.next();
-                    System.out.println("Pisos: ");
-                    pisos = r.nextInt();
-                    System.out.println("Nombre del dueno: ");
-                    nom_dueno = r.next();
-                    del.add(new Vandalismo(edificacion, pisos, nom_dueno, n_policia, id_policia, n_celda, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
-                    break;
-                
-                case 2:
-                    System.out.println("Objeto: ");
-                    objeto = r.next();
-                    System.out.println("Valor: ");
-                    valor = r.nextDouble();
-                    del.add(new Hurto(objeto, valor, n_policia, id_policia, n_celda, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
-                    break;
-                
-                case 3:
-                    System.out.println("Nombre del solicitante:");
-                    nom_solicitante = r.next();
-                    del.add(new Prostitucion(nom_solicitante, n_policia, id_policia, n_celda, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
-                    break;
-                
-                default:
-                    System.out.println("Opcion no valida");
-                    break;
+
+            System.out.println("1.Vandalismo\n2.Hurto\n3.Prostitucion");
+            tipo = r.nextInt();
+            try {
+                num(tipo);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
+            while (tipo < 1 || tipo > 4) {
+                System.out.println("1.Vandalismo\n2.Hurto\n3.Prostitucion");
+                tipo = r.nextInt();
+                try {
+                    num(tipo);
+                } catch (MiExcepcion ex) {
+                    System.out.println(ex.getMessage());
+                }
+                switch (tipo) {
+                    case 1:
+                        System.out.println("Edificacion: ");
+                        edificacion = r.next();
+                        try {
+                            texto(edificacion);
+                        } catch (MiExcepcion ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                        System.out.println("Pisos: ");
+                        pisos = r.nextInt();
+                        try {
+                            num(pisos);
+                        } catch (MiExcepcion ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                        System.out.println("Nombre del dueno: ");
+                        nom_dueno = r.next();
+                        try {
+                            texto(nom_dueno);
+                        } catch (MiExcepcion ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                        del.add(new Vandalismo(edificacion, pisos, nom_dueno, n_policia, id_policia, n_celda, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
+                        break;
+
+                    case 2:
+                        System.out.println("Objeto: ");
+                        objeto = r.next();
+                        try {
+                            texto(objeto);
+                        } catch (MiExcepcion ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                        System.out.println("Valor: ");
+                        valor = r.nextDouble();
+                        try {
+                            dec(valor);
+                        } catch (MiExcepcion ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                        del.add(new Hurto(objeto, valor, n_policia, id_policia, n_celda, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
+                        break;
+
+                    case 3:
+                        System.out.println("Nombre del solicitante:");
+                        nom_solicitante = r.next();
+                        try {
+                            texto(nom_solicitante);
+                        } catch (MiExcepcion ex) {
+                            System.out.println(ex.getMessage());
+                        }
+                        del.add(new Prostitucion(nom_solicitante, n_policia, id_policia, n_celda, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
+                        break;
+
+                    default:
+                        System.out.println("Opcion no valida");
+                        break;
+                }
             }
         }
         if (t == 2) {
             System.out.println("Puntuacion (1-5): ");
             punt = r.nextInt();
+            try {
+                num(punt);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
             while (punt < 1 || punt > 5) {
                 System.out.println("Puntuacion (1-5): ");
                 punt = r.nextInt();
+                try {
+                    num(punt);
+                } catch (MiExcepcion ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
-            //del.add(new D_Grave(punt, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
-            System.out.println(" 1.Trafico de drogas\n 2.Terrorismo\n 3.Asesinato\n 4.Violacion\n 5.Secuestro");
+            System.out.println("1) Trafico de drogas\n2.Terrorismo\n3.Asesinato\n4.Violacion\n5.Secuestro");
             tipo = r.nextInt();
+            try {
+                num(tipo);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
             while (tipo < 1 || tipo > 5) {
-                System.out.println(" 1.Trafico de drogas\n 2.Terrorismo\n 3.Asesinato\n 4.Violacion\n 5.Secuestro");
+                System.out.println("1.Trafico de drogas \n2.Terrorismo\n3.Asesinato\n4.Violacion\n5.Secuestro");
                 tipo = r.nextInt();
+                try {
+                    num(tipo);
+                } catch (MiExcepcion ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
             switch (tipo) {
-                
+
                 case 1:
                     System.out.println("Nombre de la droga: ");
                     nombre_droga = r.next();
+                    try {
+                        num(punt);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     System.out.println("Cantidad: ");
                     cantidad = r.nextInt();
+                    try {
+                        num(cantidad);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     del.add(new trafico_drogas(nombre_droga, cantidad, punt, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
                     break;
-                
+
                 case 2:
                     System.out.println("Nombre del artefacto:");
                     nombre_artefacto = r.next();
+                    try {
+                        texto(nombre_artefacto);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     System.out.println("Numero de victimas: ");
                     num_victimas = r.nextInt();
+                    try {
+                        num(num_victimas);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     del.add(new Terrorismo(nombre_artefacto, num_victimas, punt, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
                     break;
-                
+
                 case 3:
                     System.out.println("Nombre del arma: ");
                     nombre_arma = r.next();
+                    try {
+                        texto(nombre_arma);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     System.out.println("Numero de cuerpos: ");
                     num_cuerpos = r.nextInt();
+                    try {
+                        num(num_cuerpos);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     del.add(new asesinato(nombre_arma, num_cuerpos, punt, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
                     break;
-                
+
                 case 4:
                     System.out.println("Edad de la victima: ");
                     edad_victima = r.nextInt();
+                    try {
+                        num(edad_victima);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     del.add(new violacion(edad_victima, punt, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
                     break;
-                
+
                 case 5:
                     System.out.println("Tiempo retenido: ");
                     t_retenido = r.nextDouble();
+                    try {
+                        dec(t_retenido);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     System.out.println("Devuelto vivo [1.Si, 2.No]: ");
                     dv = r.nextInt();
+                    try {
+                        num(dv);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     while (dv < 1 || dv > 2) {
                         System.out.println("Devuelto vivo [1.Si, 2.No]: ");
                         dv = r.nextInt();
+                        try {
+                            num(dv);
+                        } catch (MiExcepcion ex) {
+                            System.out.println(ex.getMessage());
+                        }
                     }
                     if (dv == 1) {
                         rescatado = true;
@@ -902,12 +1067,12 @@ public class Laboratorio4_Renatovarela {
                     }
                     del.add(new secuestro(t_retenido, rescatado, punt, descripcion, nombre_delito, culpable, sentencia, fecha_crimen, pais));
                     break;
-                
+
             }
         }
-        
+
     }
-    
+
     public static void m_delito() {
         String nom_dueno, edificacion, nombre_arma, nombre_artefacto, nombre_droga, nom_solicitante, objeto, descripcion, nombre_delito, culpable = null, sentencia = null, pais;
         int culp, sent, t, tipo, pisos, cantidad, num_victimas, num_cuerpos, edad_victima;
@@ -922,17 +1087,37 @@ public class Laboratorio4_Renatovarela {
         System.out.println("Delitos\n" + d);
         System.out.println("Ingrese la posicion del delito a modificar: ");
         pos = r.nextInt();
+        try {
+            num(pos);
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
         while (pos < 0 || pos > del.size()) {
             System.out.println("Ingrese la posicion del delito a modificar: ");
             pos = r.nextInt();
+            try {
+                num(pos);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
         }
-        System.out.println("Que desea modificar?\n 1.Descripcion\n 2.Nombre del delito\n 3.Culpable\n 4.Sentencia\n 5.Fecha del crimen\n 6.Pais\n 7.Extra");
+        System.out.println("Que desea modificar?\n1.Descripcion\n2.Nombre del delito\n3.Culpable\n4.Sentencia\n5.Fecha del crimen\n6.Pais\n7.Extra");
         opc = r.nextInt();
+        try {
+            num(opc);
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
         switch (opc) {
             case 1:
                 System.out.println("Descripcion: ");
                 r.nextLine();
                 descripcion = r.nextLine();
+                try {
+                    texto(descripcion);
+                } catch (MiExcepcion ex) {
+                    System.out.println(ex.getMessage());
+                }
                 del.get(pos).setDescriptcion(descripcion);
                 break;
 
@@ -940,6 +1125,11 @@ public class Laboratorio4_Renatovarela {
                 System.out.println("Nombre del delito: ");
                 r.nextLine();
                 nombre_delito = r.nextLine();
+                try {
+                    texto(nombre_delito);
+                } catch (MiExcepcion ex) {
+                    System.out.println(ex.getMessage());
+                }
                 del.get(pos).setNombre_delito(nombre_delito);
 
                 break;
@@ -947,9 +1137,19 @@ public class Laboratorio4_Renatovarela {
             case 3:
                 System.out.println("Culpable [1.Si, 2.No]: ");
                 culp = r.nextInt();
+                try {
+                    num(culp);
+                } catch (MiExcepcion ex) {
+                    System.out.println(ex.getMessage());
+                }
                 while (culp < 1 || culp > 2) {
                     System.out.println("Culpable [1.Si, 2.No]: ");
                     culp = r.nextInt();
+                    try {
+                        num(culp);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                 }
                 if (culp == 1) {
                     culpable = "Si";
@@ -964,6 +1164,11 @@ public class Laboratorio4_Renatovarela {
                 if (del.get(pos).getCulpable().equals("Si")) {
                     System.out.println("Sentencia [1.Tiempo, 2.Pena de muerte]: ");
                     sent = r.nextInt();
+                    try {
+                        num(sent);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
                     if (sent == 1) {
                         System.out.println("Ingrese el tiempo: ");
                         sentencia = r.next();
@@ -985,6 +1190,11 @@ public class Laboratorio4_Renatovarela {
             case 6:
                 System.out.println("Pais: ");
                 pais = r.next();
+                try {
+                    texto(pais);
+                } catch (MiExcepcion ex) {
+                    System.out.println(ex.getMessage());
+                }
                 del.get(pos).setPais(pais);
 
                 break;
@@ -993,19 +1203,29 @@ public class Laboratorio4_Renatovarela {
                 if (del.get(pos) instanceof D_menor) {
                     int dm, opci;
                     String tipos;
-                    System.out.println("Modificar\n 1.Nombre del policia\n 2.Id policia\n 3.Numero de celda\n 4.Otro");
+                    System.out.println("Modificar\n1.Nombre del policia\n2.Id policia\n3.Numero de celda\n4.Otro");
                     dm = r.nextInt();
                     switch (dm) {
 
                         case 1:
                             System.out.println("Nombre de policia: ");
                             n_policia = r.next();
+                            try {
+                                texto(n_policia);
+                            } catch (MiExcepcion ex) {
+                                System.out.println(ex.getMessage());
+                            }
                             ((D_menor) del.get(pos)).setNombre_policia(n_policia);
                             break;
 
                         case 2:
                             System.out.println("ID policia: ");
                             id_policia = r.next();
+                            try {
+                                texto(id_policia);
+                            } catch (MiExcepcion ex) {
+                                System.out.println(ex.getMessage());
+                            }
                             ((D_menor) del.get(pos)).setId_policia(id_policia);
 
                             break;
@@ -1013,6 +1233,11 @@ public class Laboratorio4_Renatovarela {
                         case 3:
                             System.out.println("Numero de celda: ");
                             n_celda = r.nextInt();
+                            try {
+                                num(n_celda);
+                            } catch (MiExcepcion ex) {
+                                System.out.println(ex.getMessage());
+                            }
                             ((D_menor) del.get(pos)).setN_celda(n_celda);
                             break;
 
@@ -1023,15 +1248,30 @@ public class Laboratorio4_Renatovarela {
                                 case "Hurto":
                                     System.out.println(" 1.Objeto\n 2.Valor: ");
                                     opci = r.nextInt();
+                                    try {
+                                        num(opci);
+                                    } catch (MiExcepcion ex) {
+                                        System.out.println(ex.getMessage());
+                                    }
                                     switch (opci) {
                                         case 1:
                                             System.out.println("Objeto: ");
                                             objeto = r.next();
+                                            try {
+                                                texto(objeto);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((Hurto) del.get(pos)).setObjeto(objeto);
                                             break;
                                         case 2:
                                             System.out.println("Valor: ");
                                             valor = r.nextDouble();
+                                            try {
+                                                dec(valor);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((Hurto) del.get(pos)).setValor(valor);
                                             break;
                                         default:
@@ -1041,18 +1281,33 @@ public class Laboratorio4_Renatovarela {
                                     break;
 
                                 case "Vandalismo":
-                                    System.out.println(" 1.Edificacion\n 2.Pisos\n 3.Nombre del dueno: ");
+                                    System.out.println("1.Edificacion\n2.Pisos\n3.Nombre del dueno: ");
                                     opci = r.nextInt();
+                                    try {
+                                        num(opci);
+                                    } catch (MiExcepcion ex) {
+                                        System.out.println(ex.getMessage());
+                                    }
                                     switch (opci) {
                                         case 1:
                                             System.out.println("Edificacion: ");
                                             edificacion = r.next();
+                                            try {
+                                                texto(edificacion);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((Vandalismo) del.get(pos)).setEdificacion(edificacion);
                                             break;
 
                                         case 2:
                                             System.out.println("Pisos: ");
                                             pisos = r.nextInt();
+                                            try {
+                                                num(pisos);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((Vandalismo) del.get(pos)).setPisos(pisos);
                                             break;
 
@@ -1060,6 +1315,11 @@ public class Laboratorio4_Renatovarela {
 
                                             System.out.println("Nombre del dueno: ");
                                             nom_dueno = r.next();
+                                            try {
+                                                texto(nom_dueno);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((Vandalismo) del.get(pos)).setNom_dueno(nom_dueno);
                                             break;
 
@@ -1072,10 +1332,20 @@ public class Laboratorio4_Renatovarela {
                                 case "Prostitucion":
                                     System.out.println(" 1.Nombre del solicitante: ");
                                     opci = r.nextInt();
+                                    try {
+                                        num(opci);
+                                    } catch (MiExcepcion ex) {
+                                        System.out.println(ex.getMessage());
+                                    }
                                     switch (opci) {
                                         case 1:
                                             System.out.println("Nombre del solicitante:");
                                             nom_solicitante = r.next();
+                                            try {
+                                                texto(nom_solicitante);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((Prostitucion) del.get(pos)).setNom_solicitante(nom_solicitante);
                                             break;
 
@@ -1098,16 +1368,32 @@ public class Laboratorio4_Renatovarela {
                 if (del.get(pos) instanceof D_Grave) {
                     int dm, opci;
                     String tipos;
-                    System.out.println("Modificar\n 1.Puntuacion\n 2.Otro");
+                    System.out.println("Modificar\n1.Puntuacion\n2.Otro");
                     dm = r.nextInt();
+                    try {
+                        num(dm);
+                    } catch (MiExcepcion ex) {
+                        System.out.println(ex.getMessage());
+                    }
+
                     switch (dm) {
 
                         case 1:
                             System.out.println("Puntuacion (1-5): ");
                             punt = r.nextInt();
+                            try {
+                                num(punt);
+                            } catch (MiExcepcion ex) {
+                                System.out.println(ex.getMessage());
+                            }
                             while (punt < 1 || punt > 5) {
                                 System.out.println("Puntuacion (1-5): ");
                                 punt = r.nextInt();
+                                try {
+                                    num(punt);
+                                } catch (MiExcepcion ex) {
+                                    System.out.println(ex.getMessage());
+                                }
                             }
                             ((D_Grave) del.get(pos)).setPuntuacion(punt);
                             break;
@@ -1118,15 +1404,30 @@ public class Laboratorio4_Renatovarela {
                                 case "trafico_drogas":
                                     System.out.println(" 1.Nombre de la droga\n 2.Cantidad: ");
                                     opci = r.nextInt();
+                                    try {
+                                        num(opci);
+                                    } catch (MiExcepcion ex) {
+                                        System.out.println(ex.getMessage());
+                                    }
                                     switch (opci) {
                                         case 1:
                                             System.out.println("Nombre de la droga: ");
                                             nombre_droga = r.next();
+                                            try {
+                                                texto(nombre_droga);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((trafico_drogas) del.get(pos)).setNombre_droga(nombre_droga);
                                             break;
                                         case 2:
                                             System.out.println("Cantidad: ");
                                             cantidad = r.nextInt();
+                                            try {
+                                                num(cantidad);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((trafico_drogas) del.get(pos)).setCantidad(cantidad);
                                             break;
                                         default:
@@ -1138,16 +1439,31 @@ public class Laboratorio4_Renatovarela {
                                 case "asesinato":
                                     System.out.println(" 1.Nombre del arma\n 2.Numero de cuerpos: ");
                                     opci = r.nextInt();
+                                    try {
+                                        num(opci);
+                                    } catch (MiExcepcion ex) {
+                                        System.out.println(ex.getMessage());
+                                    }
                                     switch (opci) {
                                         case 1:
                                             System.out.println("Nombre del arma: ");
                                             nombre_arma = r.next();
+                                            try {
+                                                texto(nombre_arma);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((asesinato) del.get(pos)).setNombre_Arma(nombre_arma);
                                             break;
 
                                         case 2:
                                             System.out.println("Numero de cuerpos: ");
                                             num_cuerpos = r.nextInt();
+                                            try {
+                                                num(num_cuerpos);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((asesinato) del.get(pos)).setNum_cuerpos(num_cuerpos);
                                             break;
 
@@ -1164,12 +1480,22 @@ public class Laboratorio4_Renatovarela {
                                         case 1:
                                             System.out.println("Nombre del artefacto:");
                                             nombre_artefacto = r.next();
+                                            try {
+                                                texto(nombre_artefacto);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((Terrorismo) del.get(pos)).setNombre_artefacto(nombre_artefacto);
                                             break;
 
                                         case 2:
                                             System.out.println("Numero de victimas: ");
                                             num_victimas = r.nextInt();
+                                            try {
+                                                num(num_victimas);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((Terrorismo) del.get(pos)).setNum_victimas(num_victimas);
                                             break;
 
@@ -1186,6 +1512,11 @@ public class Laboratorio4_Renatovarela {
                                         case 1:
                                             System.out.println("Edad de la victima: ");
                                             edad_victima = r.nextInt();
+                                            try {
+                                                num(edad_victima);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((violacion) del.get(pos)).setEdad_victima(edad_victima);
                                             break;
 
@@ -1198,16 +1529,31 @@ public class Laboratorio4_Renatovarela {
                                 case "secuestro":
                                     System.out.println(" 1.Tiempo retenido\n 2.Devuelto vivo: ");
                                     opci = r.nextInt();
+                                    try {
+                                        num(opci);
+                                    } catch (MiExcepcion ex) {
+                                        System.out.println(ex.getMessage());
+                                    }
                                     switch (opci) {
                                         case 1:
                                             System.out.println("Tiempo retenido: ");
                                             t_retenido = r.nextDouble();
+                                            try {
+                                                dec(t_retenido);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             ((secuestro) del.get(pos)).setT_retenido(t_retenido);
                                             break;
 
                                         case 2:
                                             System.out.println("Devuelto vivo [1.Si, 2.No]: ");
                                             dv = r.nextInt();
+                                            try {
+                                                num(dv);
+                                            } catch (MiExcepcion ex) {
+                                                System.out.println(ex.getMessage());
+                                            }
                                             while (dv < 1 || dv > 2) {
                                                 System.out.println("Devuelto vivo [1.Si, 2.No]: ");
                                                 dv = r.nextInt();
@@ -1254,12 +1600,27 @@ public class Laboratorio4_Renatovarela {
         System.out.println(d);
         System.out.println("Que posicion desea eliminar?: ");
         pos = r.nextInt();
+        try {
+            num(pos);
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
         while (pos < 0 || pos > del.size()) {
             System.out.println("Que posicion desea eliminar?: ");
             pos = r.nextInt();
+            try {
+                num(pos);
+            } catch (MiExcepcion ex) {
+                System.out.println(ex.getMessage());
+            }
         }
         System.out.println("Desea eliminar?\n 1.Si\n 2.No:");
         des = r.nextInt();
+        try {
+            num(des);
+        } catch (MiExcepcion ex) {
+            System.out.println(ex.getMessage());
+        }
         if (des == 1) {
             del.remove(pos);
             System.out.println("Posicion removida con exito");
@@ -1270,32 +1631,42 @@ public class Laboratorio4_Renatovarela {
 
     public static void l_delito() {
         String va = "", hur = "", pros = "", terr = "", tra = "", ase = "", vio = "", sec = "";
-        System.out.println("Delitos");
-        System.out.println("Menores");
+        System.out.println("Delitos Menores");
+        System.out.println("------------------------------------------------");
         System.out.println("Vandalismo");
-        for (int i = 0; i < del.size(); i++) {
-            if (del.get(i).getClass().getSimpleName().equals("Vandalismo")) {
-                va += del.get(i);
+        for (int j = 0; j < del.size(); j++) {
+            
+            if (del.get(j) instanceof D_menor ) {
+                if(del.get(j) instanceof Vandalismo){
+               System.out.println(del.get(j));
+           }
+                
             }
+           
         }
         System.out.println(va + "\n");
 
         System.out.println("Hurto");
         for (int i = 0; i < del.size(); i++) {
-            if (del.get(i).getClass().getSimpleName().equals("Hurto")) {
-                hur += del.get(i);
+            
+            if (del.get(i) instanceof D_menor) {
+                if(del.get(i) instanceof Hurto){
+               System.out.println(del.get(i));
+           }
             }
+             
         }
         System.out.println(hur + "\n");
 
         System.out.println("Prostitucion");
         for (int i = 0; i < del.size(); i++) {
-            if (del.get(i).getClass().getSimpleName().equals("Prostitucion")) {
-                pros += del.get(i);
-            }
+             if(del.get(i) instanceof Prostitucion){
+               System.out.println(del.get(i));
+           }
         }
         System.out.println(pros + "\n");
         System.out.println("Graves");
+        System.out.println("----------------------------------------------------");
         System.out.println("Terroristas");
         for (int i = 0; i < del.size(); i++) {
             if (del.get(i).getClass().getSimpleName().equals("Terrorismo")) {
@@ -1337,30 +1708,30 @@ public class Laboratorio4_Renatovarela {
         System.out.println(sec + "\n");
     }
 
-    public static String texto(String nombre) {
-        while (nombre.matches("([a-z]|[A-Z]|\\s)+") == false) {
+    static void texto(String nombre) throws MiExcepcion {
+        if (nombre.matches("([a-z]|[A-Z]|\\s)+") == false) {
             System.out.println("Vuelva a ingresar el TEXTO");
             nombre = r.next();
         }
-        return nombre;
     }
 
-    public static int num(int numero) {
-        while (Integer.toString(numero).matches("^[0-9]+$") == false) {
+    public static void num(int numero) throws MiExcepcion {
+        if (Integer.toString(numero).matches("^[0-9]+$") == false) {
             System.out.println("Vuelva a ingresar el NUMERO");
             numero = r.nextInt();
         }
-        return numero;
     }
 
-    public static double dec(double decimal) {
+    public static void dec(double decimal) throws MiExcepcion {
 
-        while (Double.toString(decimal).matches("^-?[0-9]+([\\.,][0-9]{1," + decimal + "})?$") == false) {
+        if (Double.toString(decimal).matches("^-?[0-9]+([\\.,][0-9]{1," + decimal + "})?$") == false) {
             System.out.println("Vuelva a ingresar el NUMERO");
             decimal = r.nextDouble();
         }
-        return decimal;
     }
+    
+    
+    
     
 
 

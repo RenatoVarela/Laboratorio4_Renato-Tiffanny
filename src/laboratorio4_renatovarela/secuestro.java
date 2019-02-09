@@ -42,7 +42,7 @@ public class secuestro extends D_Grave {
 
     @Override
     public String toString() {
-        return "secuestro{" + "t_retenido=" + t_retenido + ", rescatado=" + rescatado + '}';
+        return super.toString()+ "\n7)t_retenido=" + t_retenido + "\n8)rescatado=" + rescatado;
     }
     
     

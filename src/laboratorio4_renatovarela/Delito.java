@@ -83,7 +83,7 @@ public class Delito {
 
     @Override
     public String toString() {
-        return "Delito{" + "descriptcion=" + descriptcion + ", nombre_delito=" + nombre_delito + ", culpable=" + culpable + ", sentencia=" + sentencia + ", fecha_crimen=" + fecha_crimen + ", pais=" + pais + '}';
+        return "Delito{" + "\n1)Descriptcion=" + descriptcion + "\n2)nombre_delito=" + nombre_delito + "\n3)culpable=" + culpable + "\n4)sentencia=" + sentencia + "\n5)fecha_crimen=" + fecha_crimen + "\n6)pais=" + pais;
     }
     
     

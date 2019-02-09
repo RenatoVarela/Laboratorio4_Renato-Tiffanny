@@ -12,12 +12,12 @@ import java.util.ArrayList;
  * @author Asus Pc
  */
 public class criminales {
-    String nombre;
-    String edad;
-    String genero;
-    String pais_reside;
-    String encarcelado;
-    String descripcion;
+    private String nombre;
+    private String edad;
+    private String genero;
+    private String pais_reside;
+    private String encarcelado;
+    private String descripcion;
     ArrayList<Delito> delito = new ArrayList() ;
 
     public criminales(String nombre, String edad, String genero, String pais_reside, String encarcelado, String descripcion) {
@@ -88,16 +88,18 @@ public class criminales {
     public void setDelito(ArrayList<Delito> delito) {
         this.delito = delito;
     }
-    
-    
 
+   /* @Override
+    public String toString() {
+        return "criminales{" + "nombre=" + nombre + ", edad=" + edad + ", genero=" + genero + ", pais_reside=" + pais_reside + ", encarcelado=" + encarcelado + ", descripcion=" + descripcion ;
+    }*/
+    
+    
 
     @Override
     public String toString() {
-        return "criminales{" + "nombre=" + nombre + ", edad=" + edad + ", genero=" + genero + ", pais_reside=" + pais_reside + ", encarcelado=" + encarcelado + ", descripcion=" + descripcion + ", delito=" + delito + '}';
+        return "Criminal: " + "\n1)nombre del crimina: " + nombre + ", \n2)Edad del Criminal: " + edad + "\n3)genero del criminal: " + genero + "\n4)pais de residencia " + pais_reside + "\n5)encarcelado: " + encarcelado + "\n6)descripcion:" + descripcion + "\nDelitos si tiene:" + delito;
     }
-   
-    
     
     
     

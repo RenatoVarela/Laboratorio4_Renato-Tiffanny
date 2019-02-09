@@ -43,7 +43,7 @@ public class trafico_drogas extends D_Grave {
 
     @Override
     public String toString() {
-        return "trafico_drogas{" + "nombre_droga=" + nombre_droga + ", cantidad=" + cantidad + '}';
+        return super.toString() +"\n7)nombre_droga=" + nombre_droga + "\n8)cantidad=" + cantidad;
     }
     
     

@@ -42,7 +42,7 @@ public class Terrorismo extends D_Grave {
 
     @Override
     public String toString() {
-        return "Terrorismo{" + "nombre_artefacto=" + nombre_artefacto + ", num_victimas=" + num_victimas + '}';
+        return super.toString() +"\n8)nombre_artefacto=" + nombre_artefacto + "\n9)num_victimas=" + num_victimas;
     }
     
     

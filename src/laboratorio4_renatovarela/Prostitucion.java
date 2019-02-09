@@ -37,7 +37,7 @@ public class Prostitucion extends D_menor {
 
     @Override
     public String toString() {
-        return "Prostitucion{" + "nom_solicitante=" + nom_solicitante + '}';
+        return super.toString() +"\n7)nom_solicitante=" + nom_solicitante;
     }
     
     

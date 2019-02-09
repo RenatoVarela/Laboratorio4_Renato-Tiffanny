@@ -42,7 +42,7 @@ public class asesinato extends D_Grave  {
 
     @Override
     public String toString() {
-        return "asesinato{" + "nombre_Arma=" + nombre_Arma + ", num_cuerpos=" + num_cuerpos + '}';
+        return  super.toString() +"\n7)nombre_Arma=" + nombre_Arma + "\n8)num_cuerpos=" + num_cuerpos;
     }
     
     
